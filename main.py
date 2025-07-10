@@ -33,5 +33,14 @@ def add_xp():
     users[username]["xp"] += xp
     return jsonify({"status": "success", "message": f"{xp} XP ajoutés à {username}."})
 
+@app.route("/get_user", methods=["GET"])
+def get_user():
+    username = request.args.get("username")
+
+    if username not in users:
+        return jsonify({"status": "error", "message": "Utilisateur inconnu."}), 404
+
+    return jsonify({"status": "success", "user": users[username]})
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080)
